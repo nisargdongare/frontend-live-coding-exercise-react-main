@@ -1,0 +1,38 @@
+{
+  "name": "frontend-coding-exercise",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "crypto-browserify": "^3.12.0",
+    "node-persist": "^4.0.3",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-scripts": "^5.0.1",
+    "typescript": "^4.6.2",
+    "webpack": "^5.95.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "@types/jest": "^29.5.13",
+    "@types/node-persist": "^3.1.8",
+    "@types/react": "^18.3.9"
+  }
+}
