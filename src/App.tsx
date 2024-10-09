@@ -12,12 +12,10 @@ const QuestionnaireApp: React.FC = () => {
   const [averageScore, setAverageScore] = useState<number | null>(null);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-  // Load previous scores from localStorage when the app mounts
   useEffect(() => {
     loadScores();
   }, []);
 
-  // Load previous scores from localStorage
   const loadScores = () => {
     const previousScores = JSON.parse(localStorage.getItem('scores') || '[]');
     if (previousScores.length > 0) {
@@ -26,14 +24,12 @@ const QuestionnaireApp: React.FC = () => {
     }
   };
 
-  // Save the current score to localStorage
   const saveScore = (score: number) => {
     const previousScores = JSON.parse(localStorage.getItem('scores') || '[]');
     const newScores = [...previousScores, score];
     localStorage.setItem('scores', JSON.stringify(newScores));
   };
 
-  // Calculate the score based on yes answers
   const calculateScore = () => {
     const yesResponses = Object.values(responses).filter((response) => response).length;
     const totalQuestions = Object.keys(QUESTIONS).length;
@@ -46,7 +42,6 @@ const QuestionnaireApp: React.FC = () => {
     setIsSubmitted(true);
   };
 
-  // Handle yes/no answer selection
   const handleResponse = (questionId: number, answer: boolean) => {
     setResponses((prevResponses) => ({
       ...prevResponses,
@@ -61,16 +56,16 @@ const QuestionnaireApp: React.FC = () => {
         {Object.entries(QUESTIONS).map(([id, question]) => (
           <li key={id} style={{ margin: '15px 0', padding: '10px', border: '1px solid #ccc', borderRadius: '5px', backgroundColor: '#fff' }}>
             <p style={{ margin: '0 0 10px', color: '#555' }}>{question}</p>
-            <button 
-              onClick={() => handleResponse(Number(id), true)} 
-              style={{ marginRight: '10px', padding: '10px 15px', backgroundColor: responses[Number(id)] === true ? '#4caf50' : '#e7e7e7', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }} 
+            <button
+              onClick={() => handleResponse(Number(id), true)}
+              style={{ marginRight: '10px', padding: '10px 15px', backgroundColor: responses[Number(id)] === true ? '#4caf50' : '#e7e7e7', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
               disabled={isSubmitted}
             >
               Yes
             </button>
-            <button 
-              onClick={() => handleResponse(Number(id), false)} 
-              style={{ padding: '10px 15px', backgroundColor: responses[Number(id)] === false ? '#f44336' : '#e7e7e7', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }} 
+            <button
+              onClick={() => handleResponse(Number(id), false)}
+              style={{ padding: '10px 15px', backgroundColor: responses[Number(id)] === false ? '#f44336' : '#e7e7e7', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
               disabled={isSubmitted}
             >
               No
@@ -78,9 +73,9 @@ const QuestionnaireApp: React.FC = () => {
           </li>
         ))}
       </ul>
-      <button 
-        onClick={calculateScore} 
-        style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#2196F3', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }} 
+      <button
+        onClick={calculateScore}
+        style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#2196F3', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
         disabled={isSubmitted}
       >
         Submit
