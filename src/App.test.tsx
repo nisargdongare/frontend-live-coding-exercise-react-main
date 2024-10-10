@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from './App';
+import Questions from './questions';
 
 beforeEach(() => {
   Storage.prototype.setItem = jest.fn();
@@ -10,36 +11,36 @@ beforeEach(() => {
 });
 
 describe('App', () => {
-  test('renders input, buttons, and data display', () => {
+
+  test('renders text, buttons, and data display', () => {
     render(<App />);
-    
-    expect(screen.getByPlaceholderText(/enter some data/i)).toBeInTheDocument();
-    expect(screen.getByText(/Save to LocalStorage/i)).toBeInTheDocument();
-    expect(screen.getByText(/Clear LocalStorage/i)).toBeInTheDocument();
-    expect(screen.getByText(/Current Data:/i)).toBeInTheDocument();
+    expect(screen.getByText(/Questions for Coding/i)).toBeInTheDocument();
+    expect(screen.getByText(/Average Score for All Runs:/i)).toBeInTheDocument();
+    expect(screen.getByText(/Developed by Nisarg Dongare/i)).toBeInTheDocument();
+
   });
 
-  test('saves data to localStorage when Save button is clicked', () => {
+  test('saves data to localStorage on submit', () => {
     render(<App />);
 
-    const inputElement = screen.getByPlaceholderText(/enter some data/i);
-    const saveButton = screen.getByText(/Save to LocalStorage/i);
+    const yesButtons = screen.getAllByText('Yes');
+    const noButtons = screen.getAllByText('No');
     
-    fireEvent.change(inputElement, { target: { value: 'Test Data' } });
-    fireEvent.click(saveButton);
-
-    expect(localStorage.setItem).toHaveBeenCalledWith('scores', JSON.stringify([Number('Test Data')]));
-  });
-
-  test('clears data from localStorage when Clear button is clicked', () => {
-    render(<App />);
-
-    const clearButton = screen.getByText(/Clear LocalStorage/i);
-    
-    fireEvent.click(clearButton);
-
-    expect(localStorage.removeItem).toHaveBeenCalledWith('scores');
-    expect(screen.getByText(/Current Data:/i)).toHaveTextContent('No data');
+    fireEvent.click(yesButtons[0]); 
+    fireEvent.click(yesButtons[1]); 
+    fireEvent.click(noButtons[2]);  
+    fireEvent.click(noButtons[3]);  
+    fireEvent.click(noButtons[4]);  
+  
+    const submitButton = screen.getByText('Submit');
+    fireEvent.click(submitButton);
+  
+    const expectedScore = (2 / 5) * 100; 
+  
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'scores',
+      JSON.stringify([expectedScore])
+    );
   });
 
 });
